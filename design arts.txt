@@ -1,4 +1,1 @@
-design arts
-  const name = "Super Admin"
-  const email = "admin@designarts.com"
-  const password = "admin123
+
