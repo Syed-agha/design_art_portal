@@ -1,0 +1,361 @@
+/*tracking page*/
+:root {
+  --primary-color: #28a745;
+  --secondary-color: #f8f9fa;
+  --text-color: #333;
+  --error-color: #dc3545;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', Arial, sans-serif; /* Add Google Font link in HTML */
+}
+
+body {
+  background: linear-gradient(135deg, #f5f5f5 0%, #e9ecef 100%);
+  margin: 0;
+  padding: 0;
+  color: var(--text-color);
+}
+
+.container {
+  max-width: 600px;
+  margin: 60px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease;
+}
+
+.container:hover {
+  transform: translateY(-2px);
+}
+
+h1 {
+  text-align: center;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.search-box {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+}
+
+.search-box button {
+  padding: 12px 18px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.search-box button:hover {
+  background: #218838;
+}
+
+.search-box button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+#loading {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 18px;
+  margin: 20px 0;
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 30px 0;
+  position: relative;
+}
+
+.progress::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20px;
+  bottom: 0;
+  width: 2px;
+  background: #ddd;
+  z-index: 0;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  color: #999;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.step i {
+  margin-right: 15px;
+  font-size: 20px;
+}
+
+.step span {
+  font-size: 12px;
+  display: block;
+}
+
+.step.active {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  background: #e9f7ef;
+  font-weight: bold;
+}
+
+.step.active::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 68%;
+  transform: translate(-50%, -50%);
+  width: 21%;
+  height: 100%;
+  background: var(--primary-color);
+  border-radius: 50%;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.dispatch-box {
+  background: var(--secondary-color);
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 5px solid var(--primary-color);
+  margin-top: 20px;
+}
+
+.error {
+  color: var(--error-color);
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Mobile Enhancements */
+@media (max-width: 600px) {
+  .container {
+    margin: 20px;
+    padding: 20px;
+  }
+  .progress {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .progress::before {
+    display: none; /* Hide line on mobile for vertical layout */
+  }
+  .step {
+    margin-bottom: 10px;
+  }
+}
+
+/* Admin Login Page */
+.login-container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 30px;
+  text-align: center;
+}
+
+.login-box {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.login-box input {
+  padding: 10px;
+  font-size: 14px;
+}
+
+.login-box button {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.login-box button:hover {
+  background-color: #0056b3;
+}
+
+/* Footer */
+/* Remove fixed positioning */
+footer {
+  background: #000000;
+  color:#ffffff;
+  text-align: center;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  margin-top: 0;
+  /* No position: fixed; */
+}
+
+/* Sticky Footer with Flexbox */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;  /* Ensure no margin pushes content */
+  padding: 0;
+}
+
+.container {
+  flex: 1;  /* Expands to push footer down if content is short */
+}
+
+/* Optional: Add margin to footer for spacing */
+footer {
+  margin-top: auto;  /* Pushes footer to bottom in flex layout */
+}
+
+/* Dashboard */
+/* Orders List */
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.order-card {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: box-shadow 0.3s ease;
+}
+
+.order-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-info {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.order-detail {
+  font-size: 14px;
+}
+
+.order-detail strong {
+  color: #333;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: white;
+  font-weight: bold;
+}
+
+.status-printing { background: #17a2b8; }
+.status-pasting { background: #007bff; }
+.status-lamination { background: #6c757d; }
+.status-cutting { background: #ffc107; color: black; }
+.status-packing { background: #1e5280; }
+.status-dispatch { background: #28a745; }
+
+.update-section {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.update-section select {
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.update-section button {
+  padding: 5px 10px;
+  background: #12d700;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.update-section button:hover {
+  background: #28a745;
+}
+
+.update-section .delete-btn {
+  background-color: #e53935; /* red */
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
+  margin-left: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.update-section .delete-btn:hover {
+  background-color: #c62828;
+}
+
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .order-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .update-section {
+    flex-direction: column;
+    width: 100%;
+  }
+  .update-section select, .update-section button {
+    width: 100%;
+  }
+}

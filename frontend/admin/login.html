@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Design Arts | Admin Login</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="container login-container">
+    <h1>Admin Login</h1>
+    <p>Enter your credentials to access the dashboard</p>
+
+    <div class="login-box">
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button onclick="adminLogin()">Login</button>
+    </div>
+
+    <p id="errorMsg" class="error hidden"></p>
+  </div>
+
+        <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Design Arts. All rights reserved.</p>
+    </footer>
+    
+  <script src="utils.js"></script>
+  <script src="admin.js"></script>
+</body>
+
+</html>
