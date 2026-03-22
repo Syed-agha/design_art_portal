@@ -73,7 +73,7 @@ async function trackByPO() {
   showLoading(true);
   try {
     const res = await fetch(
-      `http://localhost:5000/api/orders/track/po?po=${po}`
+      `/api/orders/track/po?po=${po}`
     );
     if (!res.ok) throw new Error("Order not found");
 
@@ -101,7 +101,7 @@ async function trackByProduct() {
   showLoading(true);
   try {
     const res = await fetch(
-      `http://localhost:5000/api/orders/track/product?code=${code}`
+      `/api/orders/track/product?code=${code}`
     );
     if (!res.ok) throw new Error("Order not found");
 
@@ -176,3 +176,11 @@ function showDispatchDetails(order) {
 
   box.innerHTML = html;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const trackPoBtn = document.getElementById("trackPoBtn");
+  if (trackPoBtn) trackPoBtn.addEventListener("click", trackByPO);
+
+  const trackProductBtn = document.getElementById("trackProductBtn");
+  if (trackProductBtn) trackProductBtn.addEventListener("click", trackByProduct);
+});
