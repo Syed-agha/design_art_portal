@@ -15,7 +15,7 @@
       <div class="form-group">
         <input type="text" id="newPO" placeholder="Purchase Order No" />
         <input type="text" id="newProductCode" placeholder="Product Name" />
-        <button onclick="createOrder()">Create Order</button>
+        <button type="button" id="createOrderBtn">Create Order</button>
       </div>
     </div>
 
@@ -23,8 +23,8 @@
     <div class="search-section">
   <input type="text" id="searchPO" placeholder="Search by PO number">
   <input type="text" id="searchCode" placeholder="Search by Product Code">
-  <button onclick="searchOrders()">Search</button>
-  <button onclick="loadOrders()">Reset</button>
+  <button type="button" id="searchOrdersBtn">Search</button>
+  <button type="button" id="resetOrdersBtn">Reset</button>
 </div>
 
     <!-- Orders List (Replaces Table) -->
@@ -41,7 +41,7 @@
     <p>&copy; 2026 Design Arts. All rights reserved.</p>
   </footer>
 
-  <script src="utils.js"></script>
+  <script src="../js/utils.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>
