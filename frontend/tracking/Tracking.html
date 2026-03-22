@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Design Arts | Order Tracking</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-  <link rel="stylesheet" href="D:\clients\Design arts\frontend\css\style.css" />
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
 
@@ -20,7 +20,7 @@
         placeholder="Enter Purchase Order Number"
         aria-label="Enter Purchase Order Number"
       />
-      <button id="trackPoBtn" onclick="trackByPO()" aria-label="Track by PO">
+      <button type="button" id="trackPoBtn" aria-label="Track by PO">
         <i class="fas fa-search"></i> Track Order
       </button>
     </div>
@@ -33,7 +33,7 @@
         placeholder="Enter Product Name"
         aria-label="Enter Product Code"
       />
-      <button id="trackProductBtn" onclick="trackByProduct()" aria-label="Track by Product Code">
+      <button type="button" id="trackProductBtn" aria-label="Track by Product Code">
         <i class="fas fa-search"></i> Track Order
       </button>
     </div>
@@ -91,7 +91,7 @@
         <p>&copy; 2026 Design Arts. All rights reserved.</p>
     </footer>
 
-  <script src="utils.js"></script>
+  <script src="../js/utils.js"></script>
   <script src="track.js"></script>
 
 </body>
