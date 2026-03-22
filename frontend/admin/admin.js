@@ -17,7 +17,7 @@ async function adminLogin() {
   if (!email || !password) return showError("Please enter both email and password.");
 
   try {
-    const res = await apiRequest("http://localhost:5000/api/auth/login", "POST", { email, password });
+    const res = await apiRequest("/api/auth/login", "POST", { email, password });
 
     if (res.token) {
       localStorage.setItem("adminToken", res.token);
@@ -34,6 +34,7 @@ async function adminLogin() {
 // =================== LOAD ORDERS ===================
 async function loadOrders() {
   const list = document.getElementById("ordersList");
+  if (!list) return;
   list.innerHTML = "";
   const token = localStorage.getItem("adminToken");
   if (!token) {
@@ -44,7 +45,7 @@ async function loadOrders() {
 
   try {
     // Fetch all orders (you can add a GET endpoint /api/orders for this)
-    const orders = await apiRequest("http://localhost:5000/api/orders", "GET", null, token);
+    const orders = await apiRequest("/api/orders", "GET", null, token);
 
     orders.forEach(order => {
       const card = document.createElement("div");
@@ -71,7 +72,7 @@ async function loadOrders() {
             <option value="packing" ${order.current_status === 'packing' ? 'selected' : ''}>Packing</option>
             <option value="dispatch" ${order.current_status === 'dispatch' ? 'selected' : ''}>Dispatch</option>
           </select>
-            <button onclick="updateOrder(${order.id})">Update</button>
+            <button class="update-status-btn" data-order-id="${order.id}">Update</button>
 <select class="caution-select" data-id="${order.id}">
   <option value="">-- No Caution --</option>
   <option value="Art work pending">Art work pending</option>
@@ -85,7 +86,7 @@ async function loadOrders() {
   Update Caution
 </button>
 
-          <button class="delete-btn" onclick="deleteOrder(${order.id})">Delete</button>
+          <button class="delete-btn" data-order-id="${order.id}">Delete</button>
         </div>
       `;
       list.appendChild(card);
@@ -104,7 +105,7 @@ async function updateCaution(orderId) {
 
   try {
     const res = await fetch(
-      `http://localhost:5000/api/orders/${orderId}/caution`,
+      `/api/orders/${orderId}/caution`,
       {
         method: "PUT",
         headers: {
@@ -129,6 +130,12 @@ document.addEventListener("click", (e) => {
   if (e.target.classList.contains("update-caution-btn")) {
     const orderId = e.target.dataset.id;
     updateCaution(orderId);
+  }
+  if (e.target.classList.contains("update-status-btn")) {
+    updateOrder(e.target.dataset.orderId);
+  }
+  if (e.target.classList.contains("delete-btn")) {
+    deleteOrder(e.target.dataset.orderId);
   }
 });
 
@@ -171,7 +178,7 @@ async function updateOrder(orderId) {
   try {
     // 🔁 1) Update status + dispatch
     const res = await apiRequest(
-      `http://localhost:5000/api/orders/${orderId}/status`,
+      `/api/orders/${orderId}/status`,
       "PUT",
       { status: newStatus, dispatch },
       token
@@ -195,7 +202,7 @@ async function deleteOrder(orderId) {
 
   try {
     const res = await apiRequest(
-      `http://localhost:5000/api/orders/${orderId}`,
+      `/api/orders/${orderId}`,
       "DELETE",
       null,
       token
@@ -217,7 +224,7 @@ async function searchOrders() {
   if (!po && !code) return alert("Enter PO number or Product Code to search");
 
   try {
-    const url = new URL("http://localhost:5000/api/orders/search");
+    const url = new URL("/api/orders/search", window.location.origin);
     if (po) url.searchParams.append("po", po);
     if (code) url.searchParams.append("code", code);
 
@@ -250,7 +257,7 @@ async function searchOrders() {
             <option value="packing" ${order.current_status === 'packing' ? 'selected' : ''}>Packing</option>
             <option value="dispatch" ${order.current_status === 'dispatch' ? 'selected' : ''}>Dispatch</option>
           </select>
-          <button onclick="updateOrder(${order.id})">Update</button>
+          <button class="update-status-btn" data-order-id="${order.id}">Update</button>
           <select class="caution-select" data-id="${order.id}">
   <option value="">-- No Caution --</option>
   <option value="Art work pending">Art work pending</option>
@@ -263,7 +270,7 @@ async function searchOrders() {
 <button class="update-caution-btn" data-id="${order.id}">
   Update Caution
 </button>
-          <button class="delete-btn" onclick="deleteOrder(${order.id})">Delete</button>
+          <button class="delete-btn" data-order-id="${order.id}">Delete</button>
         </div>
       `;
       list.appendChild(card);
@@ -284,7 +291,7 @@ async function createOrder() {
   const token = localStorage.getItem("adminToken");
 
   try {
-    const res = await apiRequest("http://localhost:5000/api/orders", "POST", { purchase_order_no: po, product_code: productCode }, token);
+    const res = await apiRequest("/api/orders", "POST", { purchase_order_no: po, product_code: productCode }, token);
     alert(res.message);
     document.getElementById("newPO").value = "";
     document.getElementById("newProductCode").value = "";
@@ -301,5 +308,21 @@ function showError(message) {
   errorMsg.classList.remove("hidden");
 }
 
-// Initial load
-window.addEventListener("load", loadOrders);
+// Initial load & event listeners
+document.addEventListener("DOMContentLoaded", () => {
+  const loginBtn = document.getElementById("loginBtn");
+  if (loginBtn) loginBtn.addEventListener("click", adminLogin);
+
+  const createOrderBtn = document.getElementById("createOrderBtn");
+  if (createOrderBtn) createOrderBtn.addEventListener("click", createOrder);
+
+  const searchOrdersBtn = document.getElementById("searchOrdersBtn");
+  if (searchOrdersBtn) searchOrdersBtn.addEventListener("click", searchOrders);
+
+  const resetOrdersBtn = document.getElementById("resetOrdersBtn");
+  if (resetOrdersBtn) resetOrdersBtn.addEventListener("click", loadOrders);
+});
+
+window.addEventListener("load", () => {
+  if (document.getElementById("ordersList")) loadOrders();
+});
