@@ -1,5 +1,4 @@
-create database design_arts_portal;
-use design_arts_portal;
+
 CREATE TABLE admins (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
@@ -26,6 +25,9 @@ select* from orders;
 ALTER TABLE orders
 MODIFY purchase_order_no VARCHAR(100) NULL,
 MODIFY product_code VARCHAR(100) NULL;
+ALTER TABLE orders
+ADD COLUMN caution_reason VARCHAR(100) DEFAULT NULL;
+
 
 CREATE TABLE dispatch_details (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -40,6 +42,11 @@ CREATE TABLE dispatch_details (
     REFERENCES orders(id)
     ON DELETE CASCADE
 );
+ALTER TABLE dispatch_details
+MODIFY dispatch_datetime DATE NOT NULL;
+UPDATE dispatch_details
+SET dispatch_datetime = DATE(dispatch_datetime);
+SET SQL_SAFE_UPDATES = 1;
 select* from dispatch_details;
 CREATE INDEX idx_po_no ON orders(purchase_order_no);
 CREATE INDEX idx_product_code ON orders(product_code);
